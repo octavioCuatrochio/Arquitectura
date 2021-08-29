@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import DAO.factory.DAOFactory;
 import clases.Cliente;
+import clases.Factura;
 import clases.Producto;
 import interfaces.ClienteDAO;
 import interfaces.FacturaDAO;
@@ -23,9 +24,13 @@ public class Main {
 		ClienteDAO clientDAO = sqlFactory.getClienteDAO();
 		clientDAO.startTable();
 		
+		FacturaDAO factDAO = sqlFactory.getFacturaDAO();
+		factDAO.startTable();
+		
 		FileSCVReader r = new FileSCVReader();
 		ArrayList<Cliente> clientes = r.getClientesFromFile();
 		ArrayList<Producto> prods = r.getProductosFromFile();
+		ArrayList<Factura> facturas = r.getFacturasFromFile();
 		
 		prods.forEach((p) -> {
 			prodDAO.insert(p);
@@ -34,6 +39,9 @@ public class Main {
 		clientes.forEach((c) -> {
 			clientDAO.insert(c);
 		});
+		
+		facturas.forEach((f) -> {
+			factDAO.insert(f);
+		});
 	}
-
 }

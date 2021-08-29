@@ -1,14 +1,14 @@
 package interfaces;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-
 import clases.Factura;
 
 public interface FacturaDAO {
 
-	Factura getFactura(int id) throws SQLException;
+	boolean startTable();
 	
-	ArrayList<Factura> getAllFacturas() throws SQLException;
+	boolean insert(Factura f);
+	
+	ArrayList<Factura> getAllFacturas();
 
 }

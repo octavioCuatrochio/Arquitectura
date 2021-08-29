@@ -10,6 +10,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import clases.Cliente;
+import clases.Factura;
 import clases.Producto;
 
 public class FileSCVReader {
@@ -44,6 +45,32 @@ public class FileSCVReader {
 		return productos;
 	}
 	
+	public ArrayList<Factura> getFacturasFromFile(){
+		CSVParser parser = null;
+		try {
+			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("files/facturas.csv"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		ArrayList<Factura> facturas = new ArrayList<>();
+		
+		for(CSVRecord row: parser) {
+
+			//En la documentacion, idProducto se guarda en la db como int, asi que me arriesgo a castearlo
+			String aux = row.get("idFactura");
+			int idFactura = Integer.parseInt(aux);
+			
+			String aux2 = row.get("idCliente");
+			int idCliente = Integer.parseInt(aux2);
+			
+			Factura newFac = new Factura(idFactura, idCliente);
+			facturas.add(newFac);
+		}
+		
+		return facturas;
+	}
+	
 	public ArrayList<Cliente> getClientesFromFile(){
 		CSVParser parser = null;
 		try {
@@ -59,7 +86,7 @@ public class FileSCVReader {
 			//En la documentacion, idProducto se guarda en la db como int, asi que me arriesgo a castearlo
 			String aux = row.get("idCliente");
 			int idCliente = Integer.parseInt(aux);
-
+			
 			String nombre = row.get("nombre");
 			
 			String email = row.get("email");
