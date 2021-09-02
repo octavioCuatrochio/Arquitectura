@@ -4,7 +4,7 @@ public class Cliente {
 	private int idCliente;
 	private String nombre;
 	private String email;
-	
+
 	public Cliente(int idCliente, String nombre, String email) {
 		super();
 		this.idCliente = idCliente;

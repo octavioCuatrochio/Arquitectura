@@ -10,11 +10,11 @@ import DAO.factory.DAOFactory;
 import clases.Factura;
 import interfaces.FacturaDAO;
 
-public class MysqlFacturaDAO implements FacturaDAO{
+public class DerbyFacturaDAO implements FacturaDAO {
 
 	private DAOFactory connectionGetter;
 
-	public MysqlFacturaDAO(DAOFactory d) {
+	public DerbyFacturaDAO(DAOFactory d) {
 		connectionGetter = d;
 	}
 	
@@ -22,7 +22,6 @@ public class MysqlFacturaDAO implements FacturaDAO{
 	public boolean startTable() {
 		try {	
 			Connection c = connectionGetter.getConnection();
-			c.setAutoCommit(false);
 
 			String table = "CREATE TABLE Factura(" +
 					"idFactura INT," +
@@ -44,7 +43,6 @@ public class MysqlFacturaDAO implements FacturaDAO{
 	public boolean insert(Factura f) {
 		try {
 			Connection conn = connectionGetter.getConnection();
-			conn.setAutoCommit(false);
 			
 			String insert = "INSERT INTO Factura (idFactura, idCliente) VALUES(?,?)";
 			PreparedStatement ps = conn.prepareStatement(insert);
@@ -66,7 +64,6 @@ public class MysqlFacturaDAO implements FacturaDAO{
 	public ArrayList<Factura> getAllFacturas() {
 		try {
 			Connection c = connectionGetter.getConnection();
-			c.setAutoCommit(false);
 
 			ArrayList<Factura> facturas = new ArrayList<Factura>();
 

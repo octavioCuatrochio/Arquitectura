@@ -11,4 +11,8 @@ public interface ProductoDAO{
 	boolean insert(Producto p);
 	
 	ArrayList<Producto> getAllProductos();
+	
+	Producto getMasVendido();
+	
+	Producto get(int id);
 }

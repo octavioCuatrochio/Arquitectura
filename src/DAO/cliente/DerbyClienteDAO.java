@@ -1,4 +1,4 @@
-package DAO.factura;
+package DAO.cliente;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,14 +7,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DAO.factory.DAOFactory;
-import clases.Factura;
-import interfaces.FacturaDAO;
+import clases.Cliente;
+import interfaces.ClienteDAO;
 
-public class MysqlFacturaDAO implements FacturaDAO{
+public class DerbyClienteDAO implements ClienteDAO {
 
 	private DAOFactory connectionGetter;
 
-	public MysqlFacturaDAO(DAOFactory d) {
+	public DerbyClienteDAO(DAOFactory d) {
 		connectionGetter = d;
 	}
 	
@@ -22,12 +22,12 @@ public class MysqlFacturaDAO implements FacturaDAO{
 	public boolean startTable() {
 		try {	
 			Connection c = connectionGetter.getConnection();
-			c.setAutoCommit(false);
 
-			String table = "CREATE TABLE Factura(" +
-					"idFactura INT," +
+			String table = "CREATE TABLE Cliente(" +
 					"idCliente INT," +
-					"PRIMARY KEY (idFactura))";
+					"nombre VARCHAR(500)," +
+					"email VARCHAR(150)," +
+					"PRIMARY KEY (idCliente))";
 
 			c.prepareStatement(table).execute();
 			c.commit();
@@ -41,15 +41,15 @@ public class MysqlFacturaDAO implements FacturaDAO{
 	}
 
 	@Override
-	public boolean insert(Factura f) {
+	public boolean insert(Cliente c) {
 		try {
 			Connection conn = connectionGetter.getConnection();
-			conn.setAutoCommit(false);
 			
-			String insert = "INSERT INTO Factura (idFactura, idCliente) VALUES(?,?)";
+			String insert = "INSERT INTO Cliente (idCliente, nombre, email) VALUES(?,?,?)";
 			PreparedStatement ps = conn.prepareStatement(insert);
-			ps.setInt(1, f.getIdFactura());
-			ps.setInt(2, f.getIdCliente());
+			ps.setInt(1, c.getIdCliente());
+			ps.setString(2, c.getNombre());
+			ps.setString(3, c.getEmail());
 			
 			ps.executeUpdate();
 			ps.close();
@@ -63,25 +63,28 @@ public class MysqlFacturaDAO implements FacturaDAO{
 	}
 
 	@Override
-	public ArrayList<Factura> getAllFacturas() {
+	public ArrayList<Cliente> getAllClientes() {
 		try {
 			Connection c = connectionGetter.getConnection();
-			c.setAutoCommit(false);
-
-			ArrayList<Factura> facturas = new ArrayList<Factura>();
-
-			String select = "SELECT * FROM Factura";
+			
+			ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+			
+			String select = "SELECT * FROM Cliente";
+			
 			PreparedStatement ps = c.prepareStatement(select);
 			ResultSet rs = ps.executeQuery();
+			
 			while(rs.next()) {
-				//Again, Esto teoricamente anda
-				Factura aux = new Factura(rs.getInt(1), rs.getInt(2));
-				facturas.add(aux);
+				Cliente aux = new Cliente(rs.getInt(1), rs.getString(2),rs.getString(3));
+				clientes.add(aux);
 			}
+		
 			c.close();
-			return facturas;
+			return clientes;
+			
 		} catch (SQLException e) {
-			return null;
+			return new ArrayList<Cliente>();
 		}
 	}
+	
 }

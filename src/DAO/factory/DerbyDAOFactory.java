@@ -5,6 +5,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import DAO.cliente.DerbyClienteDAO;
+import DAO.factura.DerbyFacturaDAO;
+import DAO.facturaProducto.DerbyFacturaProductoDAO;
+import DAO.producto.DerbyProductoDAO;
 import interfaces.ClienteDAO;
 import interfaces.FacturaDAO;
 import interfaces.FacturaProductoDAO;
@@ -37,23 +41,19 @@ public class DerbyDAOFactory extends DAOFactory{
 	}
 	@Override
 	public FacturaDAO getFacturaDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new DerbyFacturaDAO(this);
 	}
 	@Override
 	public ClienteDAO getClienteDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new DerbyClienteDAO(this);
 	}
 	@Override
 	public ProductoDAO getProductoDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new DerbyProductoDAO(this);
 	}
 	@Override
 	public FacturaProductoDAO getFacturaProductoDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new DerbyFacturaProductoDAO(this);
 	}
 
 

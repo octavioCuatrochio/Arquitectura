@@ -7,30 +7,49 @@ import interfaces.FacturaDAO;
 import interfaces.FacturaProductoDAO;
 import interfaces.ProductoDAO;
 
+/**
+ * @author Octavio Cuatrochio
+ * 
+ */
+
 public abstract class DAOFactory {
 
-	  // List of DAO types supported by the factory
-	  public static final int MYSQL = 1;
-	  public static final int DERBY = 2;
+	public static final int MYSQL = 1;
+	public static final int DERBY = 2;
 
-	  // There will be a method for each DAO that can be 
-	  // created. The concrete factories will have to 
-	  // implement these methods.
-	  public abstract Connection getConnection();
-	  public abstract FacturaDAO getFacturaDAO();
-	  public abstract ClienteDAO getClienteDAO();
-	  public abstract ProductoDAO getProductoDAO();
-	  public abstract FacturaProductoDAO getFacturaProductoDAO();
+	/**
+	 * Getter de Conexiones a la DataBase.
+	 * 
+	 * @return Connection: devuelve conexión ya creada hacia la DB.
+	 * @code Siempre cerrar la conexión. Connection c.close();
+	 */
+	public abstract Connection getConnection();
 
-	  public static DAOFactory getDAOFactory(int selectedFactory) {
-	  
-	    switch (selectedFactory) {
-	      case MYSQL: 
-	          return new MysqlDAOFactory();
-	      case DERBY    : 
-	          return new DerbyDAOFactory();      
-	      default		 : 
-	          return null;
-	    }
-	  }
+	public abstract FacturaDAO getFacturaDAO();
+
+	public abstract ClienteDAO getClienteDAO();
+
+	public abstract ProductoDAO getProductoDAO();
+
+	public abstract FacturaProductoDAO getFacturaProductoDAO();
+
+	/**
+	 * Getter de Factory dependiente del driver de DB que se quiere usar.
+	 * 
+	 * @param selectedFactory : Int con la tecnología seleccionada.
+	 * @return DAOFactory: Creador de DAOs dependiente del driver.
+	 * @exception null En caso de que no este tal tecnología en el switch.
+	 */
+
+	public static DAOFactory getDAOFactory(int selectedFactory) {
+
+		switch (selectedFactory) {
+			case MYSQL:
+				return new MysqlDAOFactory();
+			case DERBY:
+				return new DerbyDAOFactory();
+			default:
+				return null;
+		}
 	}
+}

@@ -1,4 +1,4 @@
-package DAO.factura;
+package DAO.facturaProducto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,27 +7,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DAO.factory.DAOFactory;
-import clases.Factura;
-import interfaces.FacturaDAO;
+import clases.FacturaProducto;
+import interfaces.FacturaProductoDAO;
 
-public class MysqlFacturaDAO implements FacturaDAO{
+public class MysqlFacturaProductoDAO implements FacturaProductoDAO {
 
 	private DAOFactory connectionGetter;
 
-	public MysqlFacturaDAO(DAOFactory d) {
+	public MysqlFacturaProductoDAO(DAOFactory d) {
 		connectionGetter = d;
 	}
-	
+
 	@Override
 	public boolean startTable() {
-		try {	
+		try {
 			Connection c = connectionGetter.getConnection();
 			c.setAutoCommit(false);
 
-			String table = "CREATE TABLE Factura(" +
-					"idFactura INT," +
-					"idCliente INT," +
-					"PRIMARY KEY (idFactura))";
+			String table = "CREATE TABLE Factura_Producto(" + "idFactura INT," + "idProducto INT," + "cantidad INT)";
 
 			c.prepareStatement(table).execute();
 			c.commit();
@@ -41,41 +38,42 @@ public class MysqlFacturaDAO implements FacturaDAO{
 	}
 
 	@Override
-	public boolean insert(Factura f) {
+	public boolean insert(FacturaProducto fp) {
 		try {
 			Connection conn = connectionGetter.getConnection();
 			conn.setAutoCommit(false);
-			
-			String insert = "INSERT INTO Factura (idFactura, idCliente) VALUES(?,?)";
+
+			String insert = "INSERT INTO Factura_Producto (idFactura, idProducto, cantidad) VALUES(?,?,?)";
 			PreparedStatement ps = conn.prepareStatement(insert);
-			ps.setInt(1, f.getIdFactura());
-			ps.setInt(2, f.getIdCliente());
-			
+			ps.setInt(1, fp.getIdFactura());
+			ps.setInt(2, fp.getIdProducto());
+			ps.setInt(3, fp.getCantidad());
+
 			ps.executeUpdate();
 			ps.close();
 			conn.commit();
 			conn.close();
-			
+
 			return true;
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			return false;
 		}
 	}
 
 	@Override
-	public ArrayList<Factura> getAllFacturas() {
+	public ArrayList<FacturaProducto> getAllFacturaProductos() {
 		try {
 			Connection c = connectionGetter.getConnection();
 			c.setAutoCommit(false);
 
-			ArrayList<Factura> facturas = new ArrayList<Factura>();
+			ArrayList<FacturaProducto> facturas = new ArrayList<FacturaProducto>();
 
-			String select = "SELECT * FROM Factura";
+			String select = "SELECT * FROM Factura_Producto";
 			PreparedStatement ps = c.prepareStatement(select);
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
-				//Again, Esto teoricamente anda
-				Factura aux = new Factura(rs.getInt(1), rs.getInt(2));
+			while (rs.next()) {
+				// Again, Esto teoricamente anda
+				FacturaProducto aux = new FacturaProducto(rs.getInt(1), rs.getInt(2), rs.getInt(3));
 				facturas.add(aux);
 			}
 			c.close();
@@ -84,4 +82,5 @@ public class MysqlFacturaDAO implements FacturaDAO{
 			return null;
 		}
 	}
+
 }

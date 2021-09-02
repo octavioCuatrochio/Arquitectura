@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import DAO.cliente.MysqlClienteDAO;
 import DAO.factura.MysqlFacturaDAO;
+import DAO.facturaProducto.MysqlFacturaProductoDAO;
 import DAO.producto.MysqlProductoDAO;
 import interfaces.ClienteDAO;
 import interfaces.FacturaDAO;
@@ -56,7 +57,6 @@ public class MysqlDAOFactory extends DAOFactory {
 
 	@Override
 	public FacturaProductoDAO getFacturaProductoDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MysqlFacturaProductoDAO(this);
 	}
 }

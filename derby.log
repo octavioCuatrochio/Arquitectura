@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Mon Aug 30 16:12:57 ART 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-017b-987a-999b-00000d7115e0 
+on database directory C:\Users\Dask\eclipse-workspace\Integrador\MyDerbyDb with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@6d5380c2 
+Loaded from file:/C:/Users/Dask/.m2/repository/org/apache/derby/derby/10.15.2.0/derby-10.15.2.0.jar
+java.vendor=Oracle Corporation
+java.runtime.version=16.0.2+7-67
+user.dir=C:\Users\Dask\eclipse-workspace\Integrador
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
