@@ -87,4 +87,28 @@ public class DerbyClienteDAO implements ClienteDAO {
 		}
 	}
 	
+	public ArrayList<Cliente> getClientesByRecaudacion() {
+		try {
+			Connection c = connectionGetter.getConnection();
+
+			ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+
+			String select = "SELECT c.*, SUM(p.valor * fp.cantidad) AS suma FROM cliente AS c JOIN factura AS f ON (c.idCliente = f.idCliente) JOIN factura_producto AS fp ON (f.idFactura = fp.idFactura) JOIN producto AS p ON fp.idProducto = p.idProducto GROUP BY c.idCliente ORDER BY suma DESC ";
+
+			PreparedStatement ps = c.prepareStatement(select);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				Cliente aux = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3));
+				clientes.add(aux);
+			}
+
+			c.close();
+			return clientes;
+
+		} catch (SQLException e) {
+			return new ArrayList<Cliente>();
+		}
+	}
+	
 }

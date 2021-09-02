@@ -11,4 +11,6 @@ public interface ClienteDAO {
 		boolean insert(Cliente c);
 		
 		ArrayList<Cliente> getAllClientes();
+		
+		ArrayList<Cliente> getClientesByRecaudacion();
 }

@@ -22,39 +22,39 @@ public class Main {
 //		DAOFactory factory = DAOFactory.getDAOFactory(DAOFactory.DERBY);
 
 		ProductoDAO prodDAO = factory.getProductoDAO();
-//		prodDAO.startTable();
+		prodDAO.startTable();
 
 		ClienteDAO clientDAO = factory.getClienteDAO();
-//		clientDAO.startTable();
+		clientDAO.startTable();
 
 		FacturaDAO factDAO = factory.getFacturaDAO();
-//		factDAO.startTable();
+		factDAO.startTable();
 
 		FacturaProductoDAO fpDAO = factory.getFacturaProductoDAO();
-//		fpDAO.startTable();
+		fpDAO.startTable();
 		System.out.println(prodDAO.getMasVendido());
 
-//		FileSCVReader r = new FileSCVReader();
-//		ArrayList<Cliente> clientes = r.getClientesFromFile();
-//		ArrayList<Producto> prods = r.getProductosFromFile();
-//		ArrayList<Factura> facturas = r.getFacturasFromFile();
-//		ArrayList<FacturaProducto> fps = r.getFacturaProductosFromFile();
-//
-//		prods.forEach((p) -> {
-//			prodDAO.insert(p);
-//		});
-//
-//		clientes.forEach((c) -> {
-//			clientDAO.insert(c);
-//		});
-//
-//		facturas.forEach((f) -> {
-//			factDAO.insert(f);
-//		});
-//
-//		fps.forEach((fp) -> {
-//			fpDAO.insert(fp);
-//		});
+		FileSCVReader r = new FileSCVReader();
+		ArrayList<Cliente> clientes = r.getClientesFromFile();
+		ArrayList<Producto> prods = r.getProductosFromFile();
+		ArrayList<Factura> facturas = r.getFacturasFromFile();
+		ArrayList<FacturaProducto> fps = r.getFacturaProductosFromFile();
 
+		prods.forEach((p) -> {
+			prodDAO.insert(p);
+		});
+
+		clientes.forEach((c) -> {
+			clientDAO.insert(c);
+		});
+
+		facturas.forEach((f) -> {
+			factDAO.insert(f);
+		});
+
+		fps.forEach((fp) -> {
+			fpDAO.insert(fp);
+		});
+		
 	}
 }
